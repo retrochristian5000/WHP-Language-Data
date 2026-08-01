@@ -1,0 +1,23 @@
+schema:
+  id: whp-language-profile
+  version: 0.1.0
+  description: Minimum structural contract for a WHP YAML language profile.
+required:
+  profile: {required: [id, name]}
+  normalization: {required: [unicode_form]}
+  decoder: {required: [graphemes]}
+contracts:
+  decoder.graphemes:
+    type: mapping
+    key: grapheme string
+    value:
+      candidates: {type: list, item_required: [value, confidence]}
+      note: {type: optional string}
+  sources:
+    type: list
+    note: Every nontrivial historical or linguistic assertion should identify a source.
+principles:
+  - Preserve the original input and report every normalization change.
+  - Use longest-grapheme matching before single-character matching.
+  - Retain rival readings instead of collapsing ambiguity prematurely.
+  - Keep orthography, phonology, morphology, semantics, chronology, and translation separate.
