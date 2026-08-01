@@ -6,9 +6,10 @@ Version-controlled language data and decoding tools for the World History Projec
 
 The first decoder stage is operational. It reads YAML language profiles and turns historical spellings into **traceable phonological candidates**. It does not silently claim a complete pronunciation or translation.
 
-Current profile:
+Current profiles:
 
 - Old Saxon (`profiles/old_saxon.yaml`)
+- Old High German (`profiles/old_high_german.yaml`)
 
 ## Install
 
@@ -29,10 +30,27 @@ thesa -> θesa
 uuerold -> werold
 ```
 
+## Decode Old High German
+
+```bash
+python -m decoder.cli --profile profiles/old_high_german.yaml --format text "pfunt zunga uuort"
+```
+
+Example primary output:
+
+```text
+pfunt -> pfunt
+zunga -> tsuŋga
+uuort -> wort
+```
+
+The Old High German profile keeps dialect- and context-sensitive spellings such as `ph`, `zz`, `ch`, `th`, and `uu` as explicit candidate sets instead of flattening them into one standardized pronunciation.
+
 The JSON format is the default and preserves every candidate, confidence label, note, normalization change, and warning:
 
 ```bash
-python -m decoder.cli "heƀenrîki"
+python -m decoder.cli --profile profiles/old_saxon.yaml "heƀenrîki"
+python -m decoder.cli --profile profiles/old_high_german.yaml "ezzan"
 ```
 
 ## Design rules
