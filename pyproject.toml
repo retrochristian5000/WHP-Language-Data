@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "whp-language-decoder"
-version = "0.1.0"
-description = "Profile-driven historical-language decoder for the World History Project"
+version = "0.2.0"
+description = "Profile-driven historical-language and script decoder for the World History Project"
 requires-python = ">=3.11"
 dependencies = ["PyYAML>=6.0"]
 
