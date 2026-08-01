@@ -1,0 +1,26 @@
+schema:
+  id: whp-script-profile
+  version: 0.1.0
+  description: Minimum structural contract for a WHP YAML script-transliteration profile.
+required:
+  profile: {required: [id, name, kind]}
+  normalization: {required: [unicode_form]}
+  decoder: {required: [graphemes]}
+contracts:
+  profile.kind:
+    value: script
+  decoder.graphemes:
+    type: mapping
+    key: source-script grapheme string
+    value:
+      candidates: {type: list, item_required: [value, confidence]}
+      note: {type: optional string}
+  sources:
+    type: list
+    note: Every nontrivial historical or transliteration assertion should identify a source.
+principles:
+  - Preserve the original Unicode source text.
+  - Report punctuation and normalization changes rather than hiding them.
+  - Keep script transliteration separate from language phonology and semantics.
+  - Retain rival readings instead of collapsing ambiguous runes prematurely.
+  - Do not infer language or chronology from script identity alone.
