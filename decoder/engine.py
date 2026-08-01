@@ -22,7 +22,7 @@ class CompiledRule:
 
 
 def load_profile(path: str | Path) -> dict[str, Any]:
-    """Load and minimally validate a YAML language profile."""
+    """Load and minimally validate a YAML decoder profile."""
     profile_path = Path(path)
     try:
         with profile_path.open("r", encoding="utf-8") as handle:
@@ -126,18 +126,57 @@ def _decode_word(word: str, rules: list[CompiledRule]) -> dict[str, Any]:
     return {"text": word, "segments": segments, "primary_candidate": primary, "warnings": warnings}
 
 
-def decode_text(text: str, profile: dict[str, Any]) -> dict[str, Any]:
-    """Decode text with grapheme-level provenance."""
-    if not isinstance(text, str) or not text:
-        raise DecodeError("Input text must be a non-empty string.")
+def _decode_profile_text(text: str, profile: dict[str, Any]) -> tuple[str, list[dict[str, str]], list[dict[str, Any]], str]:
     normalized, changes = _normalize(text, profile)
     rules = _compile_rules(profile)
     tokens: list[dict[str, Any]] = []
+    primary_parts: list[str] = []
     for token, is_word in _word_tokens(normalized):
         if is_word:
             decoded = _decode_word(token, rules)
             decoded["type"] = "word"
             tokens.append(decoded)
+            primary_parts.append(decoded["primary_candidate"])
         else:
             tokens.append({"text": token, "type": "separator"})
-    return {"decoder_version": "0.1.0", "stage": "orthography_to_phonological_candidates", "language": profile["profile"], "input": text, "normalized": normalized, "normalization_changes": changes, "tokens": tokens, "limitations": profile.get("limitations", [])}
+            primary_parts.append(token)
+    return normalized, changes, tokens, "".join(primary_parts)
+
+
+def decode_text(
+    text: str,
+    profile: dict[str, Any],
+    script_profile: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Decode text with optional script transliteration and grapheme-level provenance."""
+    if not isinstance(text, str) or not text:
+        raise DecodeError("Input text must be a non-empty string.")
+
+    language_input = text
+    script_decoding: dict[str, Any] | None = None
+    if script_profile is not None:
+        script_normalized, script_changes, script_tokens, language_input = _decode_profile_text(text, script_profile)
+        script_decoding = {
+            "script": script_profile["profile"],
+            "normalized": script_normalized,
+            "normalization_changes": script_changes,
+            "tokens": script_tokens,
+            "primary_transliteration": language_input,
+            "limitations": script_profile.get("limitations", []),
+        }
+
+    normalized, changes, tokens, _ = _decode_profile_text(language_input, profile)
+    result: dict[str, Any] = {
+        "decoder_version": "0.2.0",
+        "stage": "script_to_orthography_to_phonological_candidates" if script_profile is not None else "orthography_to_phonological_candidates",
+        "language": profile["profile"],
+        "input": text,
+        "normalized": normalized,
+        "normalization_changes": changes,
+        "tokens": tokens,
+        "limitations": profile.get("limitations", []),
+    }
+    if script_decoding is not None:
+        result["language_input"] = language_input
+        result["script_decoding"] = script_decoding
+    return result
