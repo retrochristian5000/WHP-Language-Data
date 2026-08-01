@@ -1,0 +1,106 @@
+profile:
+  id: elder_futhark
+  name: Elder Futhark
+  kind: script
+  script: Runic
+  unicode_block: U+16A0-U+16FF
+  scope: >-
+    Conservative transliteration of the 24-rune older futhark repertoire plus
+    common encoded graphic variants. This profile does not infer bind-runes,
+    damaged signs, rune names, word division, language, or inscription date.
+
+chronology:
+  note: >-
+    Use the inscription's archaeological and textual context rather than the
+    script profile alone to assign a date or Germanic language.
+
+normalization:
+  unicode_form: NFC
+  casefold: false
+  replacements:
+    - from: "᛫"
+      to: " "
+      reason: Normalize Runic single punctuation to a reported word separator.
+    - from: "᛬"
+      to: " "
+      reason: Normalize Runic multiple punctuation to a reported word separator.
+    - from: "᛭"
+      to: " "
+      reason: Normalize Runic cross punctuation to a reported word separator.
+
+decoder:
+  output_notation: scholarly-transliteration
+  match_policy: longest-first
+  graphemes:
+    "ᚠ": {candidates: [{value: "f", confidence: high}]}
+    "ᚢ": {candidates: [{value: "u", confidence: high}]}
+    "ᚦ":
+      candidates: [{value: "th", confidence: high}]
+      note: Latin thorn-like transliteration is represented as ASCII th for downstream language profiles.
+    "ᚨ": {candidates: [{value: "a", confidence: high}]}
+    "ᚱ": {candidates: [{value: "r", confidence: high}]}
+    "ᚲ": {candidates: [{value: "k", confidence: high}]}
+    "ᚷ": {candidates: [{value: "g", confidence: high}]}
+    "ᚹ": {candidates: [{value: "w", confidence: high}]}
+    "ᚺ": {candidates: [{value: "h", confidence: high}]}
+    "ᚻ":
+      candidates: [{value: "h", confidence: high}]
+      note: Encoded h-rune graphic variant retained as its own source grapheme.
+    "ᚾ": {candidates: [{value: "n", confidence: high}]}
+    "ᛁ": {candidates: [{value: "i", confidence: high}]}
+    "ᛃ": {candidates: [{value: "j", confidence: high}]}
+    "ᛇ":
+      candidates:
+        - {value: "ï", confidence: medium}
+        - {value: "i", confidence: low}
+        - {value: "e", confidence: low}
+      note: The conventional transliteration and phonological interpretation are disputed; alternatives remain explicit.
+    "ᛈ": {candidates: [{value: "p", confidence: high}]}
+    "ᛉ":
+      candidates:
+        - {value: "z", confidence: medium}
+        - {value: "ʀ", confidence: low}
+        - {value: "r", confidence: low}
+      note: Preserve the older z-type and later rhotic interpretations as separate candidates.
+    "ᛊ": {candidates: [{value: "s", confidence: high}]}
+    "ᛋ":
+      candidates: [{value: "s", confidence: high}]
+      note: Encoded s-rune graphic variant retained as its own source grapheme.
+    "ᛏ": {candidates: [{value: "t", confidence: high}]}
+    "ᛒ": {candidates: [{value: "b", confidence: high}]}
+    "ᛖ": {candidates: [{value: "e", confidence: high}]}
+    "ᛗ": {candidates: [{value: "m", confidence: high}]}
+    "ᛚ": {candidates: [{value: "l", confidence: high}]}
+    "ᛜ": {candidates: [{value: "ng", confidence: high}]}
+    "ᛝ":
+      candidates: [{value: "ng", confidence: high}]
+      note: Encoded ingwaz graphic variant retained as its own source grapheme.
+    "ᛞ": {candidates: [{value: "d", confidence: high}]}
+    "ᛟ": {candidates: [{value: "o", confidence: high}]}
+
+limitations:
+  - No automatic identification of Elder Futhark versus later runic rows.
+  - No bind-rune, mirrored-rune, damaged-rune, or uncertain-stroke analysis.
+  - Transliteration is not a pronunciation or translation.
+  - A rune row alone does not identify the underlying Germanic language.
+  - Unicode character identity does not guarantee manuscript or inscriptional glyph identity.
+
+examples:
+  - input: "ᚦᛖᛋᚨ"
+    expected_transliteration: "thesa"
+  - input: "ᚹᛟᚱᛞ᛫ᚠᛟᛚᚲ"
+    expected_transliteration: "word folk"
+
+sources:
+  - id: unicode-runic-names
+    title: Runic Unicode Names List
+    organization: Unicode Consortium
+    url: https://www.unicode.org/charts/nameslist/n_16A0.html
+  - id: unicode-runic-chapter
+    title: The Unicode Standard, Runic
+    organization: Unicode Consortium
+    url: https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-8/
+  - id: runes-database
+    title: RuneS Database
+    organization: RuneS research project
+    url: https://www.runesdb.de/
