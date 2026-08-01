@@ -1,0 +1,155 @@
+profile:
+  id: old_high_german
+  name: Old High German
+  iso_639_3: goh
+  glottocode: oldh1241
+  family: [Indo-European, Germanic, West Germanic, High German]
+  status: extinct
+  scope: >-
+    Broad decoding of normalized editorial Old High German from approximately
+    750-1050 CE. The profile spans multiple dialect and scribal traditions; it
+    is not manuscript OCR and does not impose a single standardized phonology.
+
+script:
+  primary: Latin
+  manuscript_context: Carolingian minuscule and related early medieval hands
+  direction: ltr
+
+chronology:
+  period: ca. 750-1050 CE
+  anchors:
+    - Old High German Tatian
+    - Otfrid's Evangelienbuch
+  note: Text date, manuscript date, dialect, and editorial normalization must be tracked separately.
+
+normalization:
+  unicode_form: NFC
+  casefold: true
+  replacements:
+    - {from: "ſ", to: "s", reason: "Normalize long s and report the change."}
+
+decoder:
+  output_notation: IPA-broad
+  match_policy: longest-first
+  graphemes:
+    "ȥȥ":
+      candidates: [{value: "sː", confidence: high}]
+      note: Editorial spelling that distinguishes the shifted fricative from affricate z.
+    "uu":
+      candidates: [{value: "w", confidence: high}, {value: "uː", confidence: low}]
+      note: Often represents the w-type consonant; vowel interpretation requires context.
+    "pf": {candidates: [{value: "pf", confidence: high}]}
+    "ph":
+      candidates: [{value: "pf", confidence: medium}, {value: "f", confidence: low}]
+      note: Historical and editorial spelling can overlap with shifted p and fricative outcomes.
+    "tz": {candidates: [{value: "ts", confidence: high}]}
+    "zz":
+      candidates: [{value: "ts", confidence: medium}, {value: "sː", confidence: medium}]
+      note: Can represent an affricate or the shifted double fricative; lexical and positional evidence is required.
+    "ch":
+      candidates: [{value: "x", confidence: medium}, {value: "kx", confidence: low}, {value: "k", confidence: low}]
+      note: Value varies by position, dialect, etymology, manuscript, and editorial convention.
+    "hh":
+      candidates: [{value: "xː", confidence: high}, {value: "x", confidence: medium}]
+      note: Common spelling for the shifted velar fricative in medial position.
+    "th":
+      candidates: [{value: "θ", confidence: medium}, {value: "ð", confidence: medium}, {value: "d", confidence: low}]
+      note: Preserves early fricative readings and later or normalized d outcomes.
+    "dh":
+      candidates: [{value: "ð", confidence: medium}, {value: "d", confidence: low}]
+    "sc":
+      candidates: [{value: "sk", confidence: medium}, {value: "ʃ", confidence: low}]
+      note: Do not project the later /ʃ/ outcome into every Old High German text.
+    "qu": {candidates: [{value: "kw", confidence: high}]}
+    "ck": {candidates: [{value: "k", confidence: high}]}
+    "ng":
+      candidates: [{value: "ŋg", confidence: medium}, {value: "ŋ", confidence: low}]
+    "ff": {candidates: [{value: "fː", confidence: high}, {value: "f", confidence: low}]}
+    "ȥ": {candidates: [{value: "s", confidence: high}]}
+    "þ": {candidates: [{value: "θ", confidence: medium}, {value: "ð", confidence: medium}, {value: "d", confidence: low}]}
+    "ð": {candidates: [{value: "ð", confidence: medium}, {value: "d", confidence: low}]}
+    "â": {candidates: [{value: "aː", confidence: high}]}
+    "ê": {candidates: [{value: "eː", confidence: high}]}
+    "î": {candidates: [{value: "iː", confidence: high}]}
+    "ô": {candidates: [{value: "oː", confidence: high}]}
+    "û": {candidates: [{value: "uː", confidence: high}]}
+    "ā": {candidates: [{value: "aː", confidence: high}]}
+    "ē": {candidates: [{value: "eː", confidence: high}]}
+    "ī": {candidates: [{value: "iː", confidence: high}]}
+    "ō": {candidates: [{value: "oː", confidence: high}]}
+    "ū": {candidates: [{value: "uː", confidence: high}]}
+    "ǣ": {candidates: [{value: "æː", confidence: medium}]}
+    "ei": {candidates: [{value: "ei", confidence: medium}]}
+    "ou": {candidates: [{value: "ou", confidence: medium}]}
+    "uo": {candidates: [{value: "uo", confidence: medium}]}
+    "ie": {candidates: [{value: "ie", confidence: low}]}
+    "iu": {candidates: [{value: "iu", confidence: low}]}
+    "io": {candidates: [{value: "io", confidence: low}]}
+    "eo": {candidates: [{value: "eo", confidence: low}]}
+    "ai": {candidates: [{value: "ai", confidence: low}]}
+    "au": {candidates: [{value: "au", confidence: low}]}
+    "a": {candidates: [{value: "a", confidence: medium}]}
+    "æ": {candidates: [{value: "æ", confidence: medium}]}
+    "ä": {candidates: [{value: "æ", confidence: low}, {value: "e", confidence: low}]}
+    "b": {candidates: [{value: "b", confidence: medium}, {value: "β", confidence: low}]}
+    "c": {candidates: [{value: "k", confidence: medium}, {value: "g", confidence: low}]}
+    "d": {candidates: [{value: "d", confidence: medium}, {value: "t", confidence: low}]}
+    "e": {candidates: [{value: "e", confidence: medium}]}
+    "ë": {candidates: [{value: "e", confidence: medium}]}
+    "f": {candidates: [{value: "f", confidence: medium}, {value: "v", confidence: low}]}
+    "g": {candidates: [{value: "g", confidence: medium}, {value: "ɣ", confidence: low}, {value: "k", confidence: low}]}
+    "h": {candidates: [{value: "h", confidence: medium}, {value: "x", confidence: low}]}
+    "i": {candidates: [{value: "i", confidence: medium}]}
+    "j": {candidates: [{value: "j", confidence: medium}]}
+    "k": {candidates: [{value: "k", confidence: high}]}
+    "l": {candidates: [{value: "l", confidence: high}]}
+    "m": {candidates: [{value: "m", confidence: high}]}
+    "n": {candidates: [{value: "n", confidence: high}]}
+    "o": {candidates: [{value: "o", confidence: medium}]}
+    "ö": {candidates: [{value: "ø", confidence: low}]}
+    "p": {candidates: [{value: "p", confidence: high}]}
+    "r": {candidates: [{value: "r", confidence: medium}]}
+    "s": {candidates: [{value: "s", confidence: medium}, {value: "z", confidence: low}]}
+    "t": {candidates: [{value: "t", confidence: high}]}
+    "u": {candidates: [{value: "u", confidence: medium}, {value: "v", confidence: low}]}
+    "ü": {candidates: [{value: "y", confidence: low}]}
+    "v": {candidates: [{value: "v", confidence: low}, {value: "u", confidence: low}, {value: "f", confidence: low}]}
+    "w": {candidates: [{value: "w", confidence: high}]}
+    "x": {candidates: [{value: "ks", confidence: medium}]}
+    "y": {candidates: [{value: "y", confidence: low}, {value: "i", confidence: low}]}
+    "z":
+      candidates: [{value: "ts", confidence: medium}, {value: "s", confidence: low}]
+      note: Editorial z can obscure the historical affricate/fricative distinction.
+
+limitations:
+  - No automatic translation, lemmatization, or morphology yet.
+  - No dialect classifier for Alemannic, Bavarian, East Franconian, or Rhenish Franconian.
+  - No manuscript-specific scribal-hand model.
+  - Vowel length marks may be editorial rather than manuscript-original.
+  - Broad candidates are not one reconstructed pronunciation.
+  - Contextual High German sound-shift rules remain explicit alternatives.
+
+examples:
+  - {input: "pfunt", expected_primary: "pfunt"}
+  - {input: "phunt", expected_primary: "pfunt"}
+  - {input: "zunga", expected_primary: "tsuŋga"}
+  - {input: "uuort", expected_primary: "wort"}
+
+sources:
+  - id: glottolog-old-high-german
+    title: Old High German (ca. 750-1050)
+    organization: Glottolog
+    url: https://glottolog.org/resource/languoid/id/oldh1241
+  - id: titus-tatian
+    title: Tatian, Gospel Harmony
+    organization: TITUS, Goethe University Frankfurt
+    url: https://titus.uni-frankfurt.de/texte/etcs/germ/ahd/tatian/tatia001.htm
+  - id: leipzig-old-high-german-dictionary
+    title: Old High German Dictionary
+    organization: Saxon Academy of Sciences and Humanities in Leipzig
+    url: https://www.saw-leipzig.de/en/research/projects/old-high-german-dictionary
+  - id: wright-old-high-german-primer
+    title: An Old High German Primer
+    author: Joseph Wright
+    year: 1906
+    url: https://www.germanic-lexicon-project.org/texts/ohg_wright_about.html
